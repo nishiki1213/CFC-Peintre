@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision CFC Peintre en bâtiment — Genève 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh}
+:root{--cp:#1D9E75;--cpl:#E1F5EE;--cpd:#0F6E56;--ca:#378ADD;--cal:#E6F1FB;--cam:#BA7517;--caml:#FAEEDA;--co:#D85A30;--col:#FAECE7;--cv:#7F77DD;--cvl:#EEEDFE;--cgrl:#F1EFE8;--rd:8px;--rdl:12px;--bdr:0.5px solid #e0ded8}
+.app{max-width:820px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.hero{text-align:center;padding:2.5rem 1rem 2rem;border-bottom:var(--bdr);margin-bottom:1.5rem}
+.hero h1{font-size:24px;font-weight:600;color:#111;margin-bottom:8px}
+.hero p{font-size:14px;color:#666}
+.pills{margin-top:10px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.pill-g{background:var(--cpl);color:var(--cpd)}.pill-r{background:var(--col);color:#993C1D}.pill-b{background:var(--cal);color:#0C447C}
+.nav-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab-btn{padding:9px 16px;font-size:13px;border:var(--bdr);border-radius:var(--rd);background:#fff;color:#555;cursor:pointer;font-weight:500}
+.tab-btn.active{background:var(--cp);color:#fff;border-color:var(--cp)}
+.tab-btn:hover:not(.active){background:#f0f0ee}
+.section{display:none}.section.active{display:block}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.stat-box{background:#ebebea;border-radius:var(--rd);padding:14px;text-align:center}
+.stat-num{font-size:24px;font-weight:600;color:#111}.stat-lbl{font-size:11px;color:#777;margin-top:3px}
+.intro{font-size:13px;color:#666;margin-bottom:1rem}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem}
+.tc{background:#fff;border:var(--bdr);border-radius:var(--rdl);padding:1rem;cursor:pointer;text-align:center}
+.tc:hover{border-color:var(--cp);background:#fafaf9}
+.tc.sp2{grid-column:span 2}
+.ti{font-size:22px;margin-bottom:6px;display:block}
+.tc h3{font-size:13px;font-weight:600;color:#111}
+.tc p{font-size:11px;color:#888;margin-top:3px}
+.btn-p{background:var(--cp);color:#fff;border:none;padding:11px 20px;border-radius:var(--rd);font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-top:1rem}
+.btn-p:hover{background:var(--cpd)}
+.btn-o{background:transparent;color:var(--cp);border:1px solid var(--cp);padding:9px 16px;border-radius:var(--rd);font-size:13px;cursor:pointer;font-weight:500}
+.btn-o:hover{background:var(--cpl)}
+.card{background:#fff;border:var(--bdr);border-radius:var(--rdl);padding:1.25rem}
+.qpbar{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.pb{flex:1;height:5px;background:#e8e8e6;border-radius:3px}
+.pbf{height:5px;background:var(--cp);border-radius:3px;transition:width .3s}
+.qbadge{font-size:12px;color:#777;white-space:nowrap;font-weight:500}
+.qsrc{font-size:10px;color:#aaa;font-style:italic;margin-bottom:4px}
+.qth{font-size:11px;color:var(--cp);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.qtxt{font-size:15px;font-weight:600;color:#111;margin-bottom:1.2rem;line-height:1.55}
+.opts{display:flex;flex-direction:column;gap:8px}
+.ob{text-align:left;padding:11px 14px;border:var(--bdr);border-radius:var(--rd);background:#fff;font-size:13px;color:#111;cursor:pointer;line-height:1.45}
+.ob:hover:not(:disabled){background:#f5f5f3;border-color:var(--cp)}
+.ob.ok{background:#EAF3DE;border-color:#639922;color:#3B6D11;font-weight:500}
+.ob.ko{background:#FCEBEB;border-color:#A32D2D;color:#791F1F}
+.expl{background:#f5f5f3;border-radius:var(--rd);padding:12px;margin-top:12px;font-size:13px;color:#555;border-left:3px solid var(--cp);display:none;line-height:1.65}
+.expl.show{display:block}
+.qa{display:flex;gap:8px;margin-top:1rem}.qa button{flex:1}
+.sc{text-align:center;padding:2.5rem 1rem}
+.scbig{font-size:52px;font-weight:700;color:var(--cp)}
+.sclbl{font-size:14px;color:#666;margin-top:5px}
+.scst{font-size:32px;margin:14px 0}
+.scmsg{font-size:14px;color:#444;margin-bottom:1.5rem}
+.fw{background:#fff;border:var(--bdr);border-radius:var(--rdl);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;cursor:pointer;text-align:center;position:relative}
+.fw:hover{border-color:var(--cp)}
+.ftag{font-size:10px;color:var(--cp);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.ff{font-size:17px;font-weight:600;color:#111;line-height:1.5}
+.fb{font-size:14px;color:#555;line-height:1.75;display:none}
+.fhint{font-size:11px;color:#bbb;position:absolute;bottom:12px;right:14px}
+.fnav{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.fctr{font-size:13px;color:#777;font-weight:500}
+.fbtns{display:flex;gap:7px}
+.thl{display:flex;flex-direction:column;gap:9px}
+.thi{background:#fff;border:var(--bdr);border-radius:var(--rdl);overflow:hidden}
+.thh{padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.thh h3{font-size:14px;font-weight:600;color:#111;flex:1}
+.thtag{font-size:10px;padding:3px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.thb{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s}
+.thb.open{max-height:1000px;padding:0 16px 18px}
+.thb p{font-size:13px;color:#555;line-height:1.75;margin-bottom:9px}
+.thb strong{font-weight:600;color:#222}
+.thb ul{padding-left:1.3rem;margin-bottom:8px}
+.thb li{font-size:13px;color:#555;line-height:1.65;margin-bottom:5px}
+.chev{font-size:12px;color:#bbb;transition:transform .2s;flex-shrink:0}
+.chev.open{transform:rotate(90deg)}
+.lbin{display:flex;gap:8px;margin-bottom:1rem}
+.lbin input{flex:1;padding:9px 13px;border:var(--bdr);border-radius:var(--rd);font-size:14px;background:#fff;color:#111;outline:none}
+.lbin input:focus{border-color:var(--cp)}
+.lbl{display:flex;flex-direction:column;gap:8px}
+.lbr{display:flex;align-items:center;gap:12px;padding:11px 15px;background:#fff;border:var(--bdr);border-radius:var(--rd)}
+.lbrank{font-size:16px;min-width:30px}
+.lbname{flex:1;font-size:14px;color:#111;font-weight:600}
+.lbsc{font-size:13px;color:#888}
+.lbbadge{font-size:11px;padding:3px 9px;border-radius:10px;background:var(--cpl);color:var(--cpd);font-weight:700}
+.empty{text-align:center;padding:2rem;color:#aaa;font-size:14px}
+.footer{text-align:center;margin-top:2rem;font-size:12px;color:#bbb}
+.tmat{background:var(--cpl);color:var(--cpd)}.tapp{background:var(--cal);color:#0C447C}.tsec{background:var(--col);color:#993C1D}.tsup{background:var(--caml);color:#633806}.tcol{background:var(--cvl);color:#3C3489}.tnor{background:var(--cgrl);color:#444}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="hero">
+  <h1>Révision CFC Peintre en bâtiment</h1>
+  <p>Toutes les questions tirées de <em>Technologie pour Peintre</em></p>
+  <div class="pills">
+    <span class="pill pill-g">70 pages scannées</span>
+    <span class="pill pill-r">Genève · 2026</span>
+    <span class="pill pill-b">6 thèmes · 60+ questions · 45 flashcards</span>
+  </div>
+</div>
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('home')">🏠 Accueil</button>
+  <button class="tab-btn" onclick="showTab('quiz')">🧠 Quiz QCM</button>
+  <button class="tab-btn" onclick="showTab('flash')">🃏 Flashcards</button>
+  <button class="tab-btn" onclick="showTab('theory')">📖 Théorie</button>
+  <button class="tab-btn" onclick="showTab('board')">🏆 Classement</button>
+</div>
+
+<!-- ACCUEIL -->
+<div id="tab-home" class="section active">
+  <div class="stat-grid">
+    <div class="stat-box"><div class="stat-num" id="sd">0</div><div class="stat-lbl">Quiz faits</div></div>
+    <div class="stat-box"><div class="stat-num" id="sb">—</div><div class="stat-lbl">Meilleur score</div></div>
+    <div class="stat-box"><div class="stat-num">6</div><div class="stat-lbl">Thèmes</div></div>
+  </div>
+  <p class="intro">Choisis un thème pour démarrer :</p>
+  <div class="theme-grid">
+    <div class="tc" onclick="startQuiz('mat')"><span class="ti">🪣</span><h3>Matériaux</h3><p>Solvants, métaux, revêtements</p></div>
+    <div class="tc" onclick="startQuiz('app')"><span class="ti">🖌️</span><h3>Application</h3><p>Outils, pinceaux, spatules</p></div>
+    <div class="tc" onclick="startQuiz('sec')"><span class="ti">🦺</span><h3>Sécurité</h3><p>EPI, biocides, COV</p></div>
+    <div class="tc" onclick="startQuiz('sup')"><span class="ti">🧱</span><h3>Supports</h3><p>Bois, béton, fissures</p></div>
+    <div class="tc" onclick="startQuiz('col')"><span class="ti">🎨</span><h3>Couleur</h3><p>Cercle, synthèse, symbolique</p></div>
+    <div class="tc" onclick="startQuiz('nor')"><span class="ti">📋</span><h3>Normes</h3><p>SIA, CRB, ISO, NCS</p></div>
+    <div class="tc sp2" onclick="startQuiz('all')"><span class="ti">⚡</span><h3>Tout mélangé</h3><p>Révision complète — toutes les pages</p></div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="tab-quiz" class="section">
+  <div id="qs"><p class="intro">Lance un quiz ou choisis un thème sur l'accueil.</p><button class="btn-p" onclick="startQuiz('all')">Lancer le quiz complet (10 questions)</button></div>
+  <div id="qr" style="display:none">
+    <div class="card">
+      <div class="qpbar"><div class="pb"><div class="pbf" id="qp" style="width:0%"></div></div><span class="qbadge" id="qc">1/10</span></div>
+      <div class="qsrc" id="qsrc"></div>
+      <div class="qth" id="qth"></div>
+      <div class="qtxt" id="qtxt"></div>
+      <div class="opts" id="qo"></div>
+      <div class="expl" id="qe"></div>
+      <div class="qa"><button class="btn-o" id="bn" onclick="nextQ()" style="display:none">Question suivante →</button></div>
+    </div>
+  </div>
+  <div id="qd" style="display:none">
+    <div class="card sc">
+      <div class="scbig" id="sp"></div><div class="sclbl" id="sd2"></div>
+      <div class="scst" id="ss"></div><div class="scmsg" id="sm"></div>
+      <button class="btn-p" onclick="startQuiz(CT)">Recommencer</button>
+      <button class="btn-o" style="margin-top:9px;width:100%" onclick="showTab('home')">Changer de thème</button>
+      <button class="btn-o" style="margin-top:9px;width:100%" onclick="showTab('board')">Enregistrer mon score 🏆</button>
+    </div>
+  </div>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="tab-flash" class="section">
+  <p class="intro">Clique sur la carte pour révéler la réponse.</p>
+  <div class="fw" onclick="flipCard()">
+    <div class="ftag" id="ft"></div>
+    <div class="ff" id="ff"></div>
+    <div class="fb" id="fb"></div>
+    <span class="fhint" id="fh">Clique pour retourner</span>
+  </div>
+  <div class="fnav">
+    <span class="fctr" id="fc"></span>
+    <div class="fbtns"><button class="btn-o" onclick="prevF()">← Préc.</button><button class="btn-o" onclick="nextF()">Suiv. →</button></div>
+  </div>
+</div>
+
+<!-- THÉORIE -->
+<div id="tab-theory" class="section"><div class="thl" id="thl"></div></div>
+
+<!-- CLASSEMENT -->
+<div id="tab-board" class="section">
+  <div class="lbin"><input type="text" id="lbn" placeholder="Ton prénom" maxlength="20"/><button class="btn-o" onclick="addScore()">Ajouter mon score</button></div>
+  <div class="lbl" id="lbd"><div class="empty">Fais un quiz puis entre ton prénom.</div></div>
+  <p style="font-size:12px;color:#bbb;margin-top:12px;text-align:center">Les scores se remettent à zéro si la page est rechargée.</p>
+</div>
+<div class="footer">CFC Peintre en bâtiment · Genève 2026 · Basé sur <em>Technologie pour Peintre</em></div>
+</div>
+
+<script>
+const Q=[
+// ========== MATÉRIAUX ==========
+{t:'mat',tag:'Matériaux',src:'p.228',q:"Quelle est la différence principale entre un solvant et un diluant ?",opts:["Le solvant est toujours à base d'eau","Le solvant dissout le liant ; le diluant ajuste la viscosité sans forcément dissoudre","Le diluant est toujours plus puissant","Aucune différence"],ans:1,exp:"Le solvant dissout les liants solides. Le diluant ajuste la viscosité et doit être compatible avec le mélange liant-solvant, sans nécessairement dissoudre."},
+{t:'mat',tag:'Matériaux',src:'p.229',q:"Pour quoi utilise-t-on la térébenthine (terpènes) ?",opts:["Diluant pour résines alkydes","Solvant pour huiles végétales, cires et diluant pour lasures à l'huile","Solvant pour nitrocellulose","Diluant pour peintures à la caséine"],ans:1,exp:"Les terpènes (térébenthine, dipentène) servent pour les huiles végétales, cires et lasures à l'huile. Le white-spirit convient mieux aux alkydes."},
+{t:'mat',tag:'Matériaux',src:'p.228',q:"Pourquoi utiliser uniquement les diluants recommandés par le fabricant ?",opts:["Raisons de couleur","Seuls ces diluants contiennent les composants adaptés au liant, séchage et formation du film","Pour économiser","Obligation légale uniquement"],ans:1,exp:"Un mauvais diluant peut modifier ou détruire le liant, et nuire à l'adhésion, la formation du film, la brillance et la résistance."},
+{t:'mat',tag:'Matériaux',src:'p.229',q:"Quel groupe de solvants est de plus en plus remplacé pour raisons d'hygiène ?",opts:["Les alcools","Les terpènes","Les aromates (xylène, toluène)","Les esters"],ans:2,exp:"Les aromates (xylène, toluène) sont remplacés pour hygiène du travail. Ils servaient de diluants pour résines alkydes."},
+{t:'mat',tag:'Matériaux',src:'p.229',q:"Pour quoi utilise-t-on l'acétone comme solvant ?",opts:["Pour les peintures à l'eau","Pour la nitrocellulose, vernis bi-composants et à base de caoutchouc chloré","Pour les alkydes","Pour les colles à papier peint"],ans:1,exp:"L'acétone (cétone) est le principal composant des diluants nitro et universels. Elle sert pour la nitrocellulose, vernis spéciaux bi-composants et caoutchouc chloré."},
+{t:'mat',tag:'Matériaux',src:'p.228',q:"Pourquoi éviter les hydrocarbures chlorés (chlorure de méthylène, trichloréthylène) ?",opts:["Ils sont trop chers","Forte pollution de l'environnement — ne pas utiliser si possible","Ils sèchent trop vite","Ils sont incompatibles avec les pinceaux"],ans:1,exp:"Les hydrocarbures chlorés causent une forte pollution de l'environnement. Ils sont utilisés en pâtes de décapage et bains de dégraissage industriels, mais à éviter autant que possible."},
+{t:'mat',tag:'Matériaux',src:'p.276',q:"En combien de catégories les revêtements muraux sont classés ?",opts:["2","3","4","5"],ans:1,exp:"3 catégories : prêts à poser (support + motifs), pour pose ultérieure (contrecollé après encollage), et matériaux de support (pare-vapeur, isolation, pontage fissures)."},
+{t:'mat',tag:'Matériaux',src:'p.276',q:"Quels sont les matériaux de base des supports pour couches décoratives ?",opts:["Uniquement le papier","Papier, non-tissé (fibres naturelles/synthétiques/verre), tissus, matières synthétiques expansées","Uniquement le plastique","Uniquement le métal"],ans:1,exp:"Les matériaux de base sont : papier (différentes qualités), non-tissé (fibres naturelles, synthétiques ou de verre), tissus (fibres naturelles ou synthétiques) et matières synthétiques expansées."},
+{t:'mat',tag:'Matériaux',src:'p.277',q:"Caractéristique principale des papiers peints non-tissés ?",opts:["Toujours en relief","Ne gonflent pas à l'eau, résistance aux déchirures élevée","Uniquement en salle de bain","Doivent toujours être peints"],ans:1,exp:"Les non-tissés ne gonflent pas en cas d'absorption d'eau et ont une stabilité et résistance aux déchirures plus élevées que le papier classique."},
+{t:'mat',tag:'Matériaux',src:'p.277',q:"Pour quelles surfaces les papiers peints vinyle sont adaptés ?",opts:["Chambres uniquement","Surfaces fortement sollicitées : couloirs, sanitaires, chambres d'enfant","Façades extérieures","Plafonds uniquement"],ans:1,exp:"Surface étanche, anti-tache, facile à nettoyer → très sollicitées."},
+{t:'mat',tag:'Matériaux',src:'p.277',q:"Qu'est-ce qu'un papier peint Tekko ?",opts:["Un papier peint en vinyle","Papier haut de gamme imprimé avec vernis bronze, calandré avec cylindres en acier, motif damas aspect tissu de soie","Un non-tissé en fibres de verre","Un papier peint photo"],ans:1,exp:"Le Tekko est un papier peint haut de gamme imprimé en plusieurs couches de vernis bronze, puis calandré avec des cylindres en acier. Le tissage du motif (damas) lui donne l'aspect d'un tissu en soie."},
+{t:'mat',tag:'Matériaux',src:'p.278',q:"À quoi sert le papier maculature (papier de fond) ?",opts:["À protéger le sol pendant les travaux","À uniformiser la teinte du support et à améliorer l'adhérence des papiers peints délicats","À boucher les fissures profondes","À isoler thermiquement les murs"],ans:1,exp:"Le papier maculature donne des supports de teinte uniforme, permet de reboucher les aspérités visibles sous lumière rasante, et facilite le retrait ultérieur des papiers peints stripables."},
+{t:'mat',tag:'Matériaux',src:'p.278',q:"Quel tissu de renforcement a remplacé le calicot et l'étamine aujourd'hui ?",opts:["La toile de jute","Le tissu en fibres de verre","Le papier ingrain","Le non-tissé en coton"],ans:1,exp:"Le tissu en fibres de verre a largement remplacé le calicot (mailles larges coton) et l'étamine pour le renforcement des murs très sollicités et la pontage des fissures."},
+{t:'mat',tag:'Matériaux',src:'p.281',q:"Qu'est-ce qu'un papier peint 'pelable' ?",opts:["S'arrache entièrement à sec sans laisser de trace","La couche supérieure s'arrache à sec, la couche inférieure reste collée sur le mur (maculature)","Se nettoie avec une éponge mouillée","Se retire uniquement avec un décapeur vapeur"],ans:1,exp:"Un papier peint pelable a une couche supérieure qu'on arrache à sec. La couche inférieure reste sur le mur et sert de maculature pour le nouveau papier peint."},
+{t:'mat',tag:'Matériaux',src:'p.282',q:"Quelle est la surface utile d'un rouleau européen de papier peint ?",opts:["2,60 m²","3,90 à 5,20 m²","7,50 m²","10 m²"],ans:1,exp:"Un rouleau européen standard fait 53 cm × 10,05 m, avec une surface utile de 3,90 à 5,20 m². Il correspond à 1,5 rouleau normal."},
+{t:'mat',tag:'Matériaux',src:'p.334',q:"Teneur en carbone de l'acier ?",opts:["0 à 0,5%","0,5 à 1,7%","2 à 4%","5 à 8%"],ans:1,exp:"Acier : 0,5 à 1,7% de carbone. Fonte de fer : 2 à 4%."},
+{t:'mat',tag:'Matériaux',src:'p.334',q:"Qu'est-ce qu'un métal ferreux ?",opts:["Densité < 5 g/cm³","A des propriétés magnétiques (fonte, acier, fer)","Ne rouille pas","Non conducteur"],ans:1,exp:"Les métaux ferreux (fonte, acier, fer) ont des propriétés magnétiques. Les non ferreux (zinc, alu, cuivre) ne sont pas magnétiques."},
+{t:'mat',tag:'Matériaux',src:'p.334',q:"Qu'est-ce qu'un métal noble ?",opts:["Un métal léger","S'oxyde très peu à l'air (or, platine, argent)","Un alliage magnétique","Un métal ferreux"],ans:1,exp:"Les métaux nobles (or, platine, argent) s'oxydent très peu et forment difficilement des composés chimiques."},
+{t:'mat',tag:'Matériaux',src:'p.334',q:"Comment est produit l'acier à partir du minerai de fer ?",opts:["Par électrolyse","Par réduction dans des hauts fourneaux avec du coke, puis réduction de la teneur en carbone de la fonte brute","Par fusion directe du sable","Par oxydation du fer pur"],ans:1,exp:"Le minerai est réduit dans des hauts fourneaux (~1600°C) avec du coke → fonte brute. Puis la teneur en carbone est réduite pour obtenir de l'acier (0,5-1,7% C). L'acier peut aussi venir de ferraille recyclée."},
+// ========== APPLICATION — OUTILS ==========
+{t:'app',tag:'Application',src:'p.117',q:"De quoi sont faites les soies des brosses à plafond de qualité ?",opts:["Fibres de verre uniquement","Soies de porc chinois noires/fauves (~10% crins) ou fibres synthétiques, ou mélange","Laine d'agneau","Nylon pur"],ans:1,exp:"Les brosses à plafond utilisent des soies de porc chinois noires ou grises, environ 10% de crins de cheval, ou des fibres synthétiques, ou un mélange. Les fibres synthétiques sont fendues et échelonnées pour une forte résistance au frottement."},
+{t:'app',tag:'Application',src:'p.117',q:"Pour quelle application utilise-t-on la brosse à surface ovale ?",opts:["Peintures de sol","Lasures d'imprégnation, lasures pour murs, apprêts et structurer les revêtements","Papiers peints","Enduits de façade"],ans:1,exp:"La brosse à surface ovale (135×65 mm, soies de porc fauves) sert pour les lasures d'imprégnation, lasures murales, apprêts et pour structurer les revêtements et crépis fins."},
+{t:'app',tag:'Application',src:'p.117',q:"Quelle est la différence entre la brosse à plafond et la brosse à plafond arrondie ?",opts:["Aucune différence","La arrondie est plus petite (135×40 mm) et sert pour petites surfaces et lasures murales","La arrondie est uniquement pour l'extérieur","La arrondie a des soies plus longues"],ans:1,exp:"La brosse à plafond arrondie (135×40 mm) a un aspect similaire à la brosse à plafond mais est plus petite. Elle est utilisée pour de plus petites surfaces et pour la pose de lasures sur les murs."},
+{t:'app',tag:'Application',src:'p.108',q:"Quelle est la largeur de la spatule à enduire bi-lame ?",opts:["2 à 5 cm","12 à 35 cm","50 à 80 cm","1 à 2 cm"],ans:1,exp:"La spatule à enduire bi-lame a une lame souple de 12 à 35 cm de large. Structure : lame en acier + renfort en fer blanc + manche en bois."},
+{t:'app',tag:'Application',src:'p.108',q:"Pour quelles techniques utilise-t-on le frottoir (lame conique) ?",opts:["Application au rouleau","Techniques de stucage","Nettoyage des rouleaux","Découpe des papiers peints"],ans:1,exp:"Le frottoir est une lame en acier inoxydable conique aux coins arrondis (20-28 cm) montée sur un support aluminium. Il est utilisé pour les techniques de stucage."},
+{t:'app',tag:'Application',src:'p.108',q:"Pourquoi ne pas utiliser la truelle fine comme platoir ?",opts:["Elle est trop lourde","Sa lame est rigide (2-12 cm) et trop petite — elle n'est pas prévue pour cette fonction","Elle n'est pas en acier inoxydable","Elle rayerait le mur"],ans:1,exp:"La truelle fine (acier forgé ou chromé, 2-12 cm, lame rigide) est pour les travaux précis. Le livre précise explicitement qu'elle ne doit pas être utilisée comme platoir."},
+{t:'app',tag:'Application',src:'p.108',q:"Quelle est la taille de la truelle platoir/faucheuse ?",opts:["10 × 5 cm","48 × 13 cm","20 × 8 cm","28 × 13 cm"],ans:1,exp:"La truelle platoir ou faucheuse a une lame en acier inoxydable de 48 × 13 cm. Elle est utilisée pour la pose à deux mains de masses d'enrobage et de crépis."},
+{t:'app',tag:'Application',src:'p.149',q:"Quelle est la taille de la brosse à encoller ?",opts:["50 × 30 mm","180 × 80 mm","300 × 100 mm","100 × 50 mm"],ans:1,exp:"La brosse à encoller mesure 180 × 80 mm. Elle a des soies de porc, fibres synthétiques ou mélange. Elle sert à l'application manuelle de colle sur les papiers peints."},
+{t:'app',tag:'Application',src:'p.149',q:"À quoi sert la roulette d'angle en tapisserie ?",opts:["Couper les papiers peints dans les angles","Maroufler uniformément les raccords dans les angles des papiers peints","Appliquer la colle dans les coins","Mesurer les angles"],ans:1,exp:"La roulette d'angle (manchon conique 4 cm) sert à maroufler uniformément les raccords de papiers peints et revêtements situés dans les angles."},
+{t:'app',tag:'Application',src:'p.149',q:"Quelle est la différence entre la roulette à joint et la roulette d'angle ?",opts:["Aucune différence","Roulette à joint (cylindrique, 3-5 cm) = raccords plats ; roulette d'angle (conique, 4 cm) = raccords dans les angles","La roulette d'angle est plus grande","La roulette à joint est uniquement pour les vinyles"],ans:1,exp:"Les deux servent à maroufler les papiers peints. La roulette à joint (3-5 cm, cylindrique) pour les raccords plats. La roulette d'angle (4 cm, conique) pour les raccords dans les angles."},
+{t:'app',tag:'Application',src:'p.149',q:"À quoi servent les dents de la spatule dentelée ?",opts:["À gratter l'ancien papier peint","La longueur des dents détermine l'épaisseur de la couche d'adhésif appliquée","À mesurer l'épaisseur du mur","À perforer les papiers peints"],ans:1,exp:"La spatule dentelée (acier dentelé ou plastique) applique des adhésifs pâteux ou visqueux. La longueur et la largeur des dents déterminent l'épaisseur de la couche d'adhésif déposée."},
+{t:'app',tag:'Application',src:'p.120',q:"Pourquoi l'application au rouleau est-elle plus efficace qu'au pinceau ?",opts:["Le rouleau coûte moins cher","Le rouleau couvre plus vite de grandes surfaces avec un film régulier — la hauteur de poil et la matière influencent la structure de surface","Le rouleau ne laisse pas de traces","Le rouleau ne nécessite pas de diluant"],ans:1,exp:"L'application au rouleau est plus rapide et régulière sur grandes surfaces. La matière (laine d'agneau, mohair, peluche synthétique), la longueur de coupe et la hauteur de poil influencent la structure et la répartition de la peinture."},
+{t:'app',tag:'Application',src:'p.122',q:"Pour quel travail le rouleau laqueur en nylon est-il recommandé ?",opts:["Peintures murales à l'eau","Peintures de sol, vitrificateurs parquet, revêtements bi-composants","Peintures à la colle","Enduits de façade"],ans:1,exp:"Rouleau laqueur nylon : hauteur de poil 6-18 mm, largeur 140-250 mm. Pour peintures de sol, vitrificateurs parquet, revêtements bi-composants."},
+{t:'app',tag:'Application',src:'p.124',q:"À quoi sert la grille de répartition ?",opts:["Nettoyer le rouleau","Répartition uniforme de la peinture sur le rouleau lors du trempage","Mesurer la consommation","Fixer la perche d'allongement"],ans:1,exp:"La grille de répartition (fer blanc perforé et galvanisé, ou plastique) assure une répartition uniforme de la peinture sur le rouleau lors du trempage dans le seau ou le bac."},
+{t:'app',tag:'Application',src:'p.124',q:"Comment fonctionne l'appareil de nettoyage des rouleaux ?",opts:["Trempage dans solvant","Le jet d'eau fait tourner le rouleau, la peinture est éliminée par force centrifuge","Grattage manuel","Ultrasons"],ans:1,exp:"L'appareil de nettoyage utilise un jet d'eau qui entraîne la rotation du rouleau. La peinture est rincée et éliminée par force centrifuge. Convient aux produits hydrosolubles."},
+{t:'app',tag:'Application',src:'p.282',q:"Qu'est-ce que la 'coupe double' en tapisserie ?",opts:["Couper le rouleau en deux","Superposer deux lés de 5-8 cm et couper simultanément — joints parfaits après retrait des bords","Doubler l'épaisseur du papier","Couper les angles à 45°"],ans:1,exp:"La coupe double : chaque lé chevauche le précédent de 5-8 cm. Les deux sont coupés simultanément dans leur zone de chevauchement, les bords retirés → joint quasi invisible."},
+{t:'app',tag:'Application',src:'p.337',q:"Pourquoi le dégraissage de l'acier doit-il se faire avec un chiffon propre et du solvant neuf ?",opts:["Pour éviter les rayures","Sinon la graisse est seulement étalée en fine couche sur la surface","Pour des raisons de couleur","Pour aller plus vite"],ans:1,exp:"Un chiffon sale ou un solvant usé redistribue la graisse en fine couche sur la surface → nuit à l'adhérence de la peinture."},
+{t:'app',tag:'Application',src:'p.110',q:"Quel facteur détermine le choix de la forme du brasseur (mélangeur) ?",opts:["La marque du fabricant","Le comportement d'écoulement du matériau, la quantité, la puissance et la vitesse de rotation","La couleur de la peinture","La température ambiante uniquement"],ans:1,exp:"Le comportement d'écoulement (liquide, visqueux, épais, pâteux), la quantité, la puissance (400-1600 W) et la vitesse (200-2000 tr/min) déterminent le choix du brasseur."},
+// ========== SÉCURITÉ ==========
+{t:'sec',tag:'Sécurité',src:'p.319',q:"Règle fondamentale de la protection chimique du bois ?",opts:["Toujours le maximum","Aussi peu que possible, mais autant que nécessaire","Interdire toute chimie","Biocides sur tout bois neuf"],ans:1,exp:"Le livre : 'Aussi peu que possible, mais autant que nécessaire.' La protection chimique n'est justifiée que si les mesures constructives sont insuffisantes."},
+{t:'sec',tag:'Sécurité',src:'p.319',q:"Quelles mesures constructives protègent le bois avant tout recours aux produits chimiques ?",opts:["Peindre directement sans préparation","Utiliser une essence résistante, auvents, surfaces inclinées, écartement du sol, ventilation arrière","Appliquer des biocides systématiquement","Enduire avec une peinture epoxy"],ans:1,exp:"Les mesures constructives incluent : utiliser une essence résistante, exposition minimale aux intempéries (auvent), surfaces inclinées, pose de gouttes pendantes, écartement du sol, et ventilation arrière (mesures contre la condensation)."},
+{t:'sec',tag:'Sécurité',src:'p.228',q:"Pourquoi utiliser des peintures à faible teneur en COV ?",opts:["Réduire le coût","Les COV s'évaporent et polluent l'air intérieur et extérieur","Séchage plus lent","Faciliter le nettoyage"],ans:1,exp:"Les composés organiques volatils (COV) s'évaporent après application et polluent l'air. On favorise donc des peintures ultra-résistantes à faible teneur en COV ou diluables à l'eau."},
+{t:'sec',tag:'Sécurité',src:'p.321',q:"Différence entre insecticide et fongicide pour la protection du bois ?",opts:["L'insecticide protège de l'humidité, le fongicide des UV","Insecticide = combat les insectes xylophages ; fongicide = combat les champignons (décolorants ou destructeurs)","Ils ont la même fonction","L'insecticide est chimique, le fongicide naturel"],ans:1,exp:"Insecticides luttent contre les insectes xylophages. Fongicides contre les champignons (décolorants comme bleuissement/moisissure, ou destructeurs comme pourritures). Tous deux sont des biocides."},
+{t:'sec',tag:'Sécurité',src:'p.321',q:"Que signifie le label 'Iv' (Lignum) sur un produit de protection du bois ?",opts:["Contre le bleuissement","Prévention contre les insectes destructeurs présents dans le bois","Contre la pourriture molle","Contre les intempéries"],ans:1,exp:"Le label 'Iv' (Lignum) = agit préventivement contre les insectes destructeurs présents dans le bois sec. 'Ivr' = effet immédiat (curatif) contre les mêmes insectes."},
+{t:'sec',tag:'Sécurité',src:'p.321',q:"Que signifie le label 'W' (Lignum) ?",opts:["Contre les insectes","Protège le bois de construction exposé aux intempéries, sans contact permanent avec terre/eau","Contre les champignons de pourriture","Contre le bleuissement"],ans:1,exp:"Le label 'W' = protège le bois exposé aux intempéries sans contact permanent avec la terre ou l'eau. Ne contient pas de substance biocide."},
+// ========== SUPPORTS ==========
+{t:'sup',tag:'Supports',src:'p.285',q:"Quelle méthode vérifie l'absorption d'un support ?",opts:["Essai de rayure","Mouillage de la surface — si l'eau est immédiatement absorbée le support est prêt","Papiers indicateurs","Tapoter le mur"],ans:1,exp:"La vérification de l'absorption se fait par mouillage de la surface. Un support prêt absorbe l'eau immédiatement. Une absorption inégale (laitance, huile de décoffrage) signale un problème."},
+{t:'sup',tag:'Supports',src:'p.285',q:"Comment vérifier la solidité d'un support minéral ?",opts:["Uniquement visuellement","Essai de rayure (ongle), tapoter/frapper (bruit creux = cavité), essai d'entaille","Humidimètre uniquement","Papiers indicateurs"],ans:1,exp:"La solidité se vérifie par : essai de rayure (ongle qui laisse sillon profond = friable), tapoter/frapper (bruit creux = cavité ou enduit décollé), et essai d'entaille."},
+{t:'sup',tag:'Supports',src:'p.286',q:"Comment traiter un suintement de résine dans le bois ?",opts:["Peindre directement","Produits spécialisés anti-résine — les diluants ordinaires sont inadaptés car ils étalent la résine","Poncer fortement","Remplacer la planche"],ans:1,exp:"Pour les suintements de résine (fines veines de mélèze/pin), utiliser des produits spécialisés anti-résine. Les diluants ordinaires étalent simplement la résine en fine couche."},
+{t:'sup',tag:'Supports',src:'p.287',q:"Limite d'humidité du bois de feuillu en intérieur avant peinture ?",opts:["6 à 11%","12% maximum","10 à 15%","4% maximum"],ans:1,exp:"Feuillu intérieur : 12% max. Résineux extérieur : 10-15%. Intérieur en général : 6-11%. Mesurer jusqu'à 5 mm de profondeur. Peut être légèrement plus élevé avant l'imprégnation."},
+{t:'sup',tag:'Supports',src:'p.291',q:"Délai avant de peindre sur un enduit à la chaux récent ?",opts:["24h","1 semaine","4 semaines (carbonatation suffisante)","3 mois"],ans:2,exp:"4 semaines pour une carbonatation suffisante. Carbonatation insuffisante → destruction de la peinture et risque d'efflorescences."},
+{t:'sup',tag:'Supports',src:'p.291',q:"Qu'est-ce que la laitance sur un support béton ?",opts:["Un champignon","Une couche de surface friable issue du processus de décoffrage, qui empêche l'absorption normale","Une fissure particulière","Une efflorescence de sel"],ans:1,exp:"La laitance est une couche de surface friable causée par le décoffrage. Elle crée une absorption insuffisante (eau ne pénètre pas). Il faut l'éliminer avant de peindre."},
+{t:'sup',tag:'Supports',src:'p.294',q:"Qu'est-ce qu'une fissure statique ?",opts:["Fissure superficielle","Fissure traversant tout le mur, souvent en escalier, due à défauts de construction ou fondations insuffisantes","Fissure de gel","Fissure de séchage"],ans:1,exp:"Les fissures statiques traversent tout le mur (souvent en escalier le long des joints de briques), causées par fondations insuffisantes, affaissement, absence de joints de dilatation, tremblements de terre ou trafic."},
+{t:'sup',tag:'Supports',src:'p.316',q:"À partir de quel taux d'humidité la moisissure se développe-t-elle dans le bois ?",opts:["10%","15%","22%","30%"],ans:2,exp:"Moisissure et bleuissement : dès 22%. Mérule : dès 24% (seul champignon destructeur à cette faible humidité). Pourriture molle : > 55%."},
+{t:'sup',tag:'Supports',src:'p.316',q:"Entre quelles températures les champignons du bois se développent-ils ?",opts:["0 à 10°C uniquement","Entre -2,5°C et +42°C selon les espèces","Au-dessus de 50°C seulement","En dessous de 0°C uniquement"],ans:1,exp:"Les champignons du bois se développent entre -2,5°C (champignons du bleuissement) et +42°C (lenzite des poutres). Des températures plus élevées tuent le mycelium selon les espèces et la durée."},
+{t:'sup',tag:'Supports',src:'p.318',q:"Comment éliminer résines, cires et huiles du bois avant peinture ?",opts:["White-spirit avec un chiffon","Mélange eau chaude + savon + ammoniaque + acétone, ou produit dérésinifiant — jamais de diluant ordinaire","Poncer seulement","Laisser sécher à l'air"],ans:1,exp:"On utilise un mélange de 1L eau chaude + 5g savon + 50cm³ ammoniaque + 1L acétone, ou un produit dérésinifiant commercial. Les diluants organiques ne font qu'étaler la résine en fine couche."},
+{t:'sup',tag:'Supports',src:'p.327',q:"Pourquoi éviter les peintures sombres sur bois exposé aux intempéries ?",opts:["Trop chères","Surchauffent le bois au soleil → fentes dans le bois et la peinture","Attirent les insectes","Décolorent plus vite"],ans:1,exp:"Peinture sombre → absorption de chaleur solaire → séchage rapide de la surface → fentes. Les peintures claires sont recommandées pour le bois extérieur."},
+{t:'sup',tag:'Supports',src:'p.303',q:"Quels sont les composants principaux des parois cellulaires du bois ?",opts:["Résine et huile","Fibres de cellulose (50-85%) et lignine (15-35%)","Protéines et tannins","Minéraux et glucides"],ans:1,exp:"Les parois cellulaires du bois sont composées de cellulose (50-85%, donne la solidité) et de lignine (15-35%, assure la durabilité). La cellulose est dégradée par les champignons qui s'en nourrissent."},
+// ========== COULEUR ==========
+{t:'col',tag:'Couleur',src:'p.398',q:"Qu'est-ce que le métamérisme ?",opts:["La mesure de la brillance","Deux teintes paraissent identiques sous un éclairage mais différentes sous un autre","La décomposition de la lumière blanche","La saturation maximale"],ans:1,exp:"Métamérisme : dû aux différences de pigmentation. Solution : sélectionner les couleurs sous un éclairage de très bonne qualité (composition spectrale équilibrée)."},
+{t:'col',tag:'Couleur',src:'p.399',q:"Qu'est-ce que la colorimétrie ?",opts:["L'art de mélanger","Mesure objective des couleurs par spectrophotomètre (370-760 nm)","Classification par nom","Technique d'application"],ans:1,exp:"Le spectrophotomètre enregistre toutes les longueurs d'ondes réfléchies (370-760 nm) et les convertit en tonalité + clarté + saturation. Permet la conversion vers NCS, RAL, Pantone…"},
+{t:'col',tag:'Couleur',src:'p.407',q:"Couleurs primaires soustractives ?",opts:["Rouge, vert, bleu","Jaune, magenta, cyan","Rouge, jaune, bleu","Blanc, noir, gris"],ans:1,exp:"En synthèse soustractive (filtres, lasures) : jaune, magenta, cyan. Jaune + magenta = rouge. Magenta + cyan = bleu. Cyan + jaune = vert. Les trois superposés → noir."},
+{t:'col',tag:'Couleur',src:'p.407',q:"Pourquoi le mélange de peintures pigmentées donne-t-il du gris foncé et non du noir ?",opts:["Parce que les peintures sont trop diluées","Parce qu'une petite portion de lumière est réfléchie directement par les pigments en surface avant d'être absorbée","Parce que les couleurs primaires sont incorrectes","Parce que le support est blanc"],ans:1,exp:"Dans un mélange de peintures, la lumière frappe les pigments. Une partie est absorbée (synthèse soustractive), mais une petite portion est réfléchie directement par les pigments en surface → gris foncé, pas noir pur."},
+{t:'col',tag:'Couleur',src:'p.409',q:"Qu'obtient-on en mélangeant violet + vert ?",opts:["Orange vif","Gris bleuâtre (couleur tertiaire)","Brun chaud","Beige"],ans:1,exp:"Violet + vert = gris bleuâtre. Orange + violet = gris rougeâtre. Vert + orange = gris jaunâtre. Ce sont des couleurs tertiaires issues du mélange de deux secondaires."},
+{t:'col',tag:'Couleur',src:'p.410',q:"Combien de couleurs chromatiques pures un œil exercé peut-il distinguer ?",opts:["50","150","300","1000"],ans:2,exp:"~300 couleurs chromatiques pures. ~150 nuances de gris (bâtonnets). Au total, quelques millions de couleurs (cônes)."},
+{t:'col',tag:'Couleur',src:'p.410',q:"Quelle couleur est placée en haut du cercle chromatique, et pourquoi ?",opts:["Rouge, plus chaude","Jaune, plus claire de toutes les chromatiques","Bleu, représente le ciel","Blanc, contient toutes les couleurs"],ans:1,exp:"Le jaune est en haut car c'est la plus claire de toutes les couleurs chromatiques pures. Le rouge est à droite, le bleu à gauche."},
+{t:'col',tag:'Couleur',src:'p.413',q:"Symbolique du violet/pourpre ?",opts:["Nature, espoir, vie","Pouvoir, dignité, richesse, maturité, force, vanité, décadence","Ciel, fidélité, raison","Sang, passion, agression"],ans:1,exp:"Le pourpre/violet est associé au pouvoir, à la dignité, à la richesse, à la maturité et à la force. Effet : élégant, majestueux, souverain, festif, noble."},
+{t:'col',tag:'Couleur',src:'p.413',q:"Quels éléments doit-on clarifier avant de choisir une couleur pour un objet ?",opts:["Uniquement la mode du moment","Qui l'utilise, à quoi il sert, son environnement, ses dimensions, son style et sa forme","Uniquement le budget","Uniquement les préférences du client"],ans:1,exp:"Avant de choisir une couleur, il faut clarifier : qui utilise l'objet, qui est en contact avec lui, à quoi il sert, son environnement, ses dimensions, et son style/forme. La couleur est choisie en tenant compte de la symbolique et des effets."},
+{t:'col',tag:'Couleur',src:'p.402',q:"De quoi est composé l'œil humain pour la vision des couleurs ?",opts:["Uniquement de bâtonnets","Globe oculaire + nerfs optiques + aire visuelle du cerveau ; cônes pour couleurs, bâtonnets pour niveaux de gris","Uniquement de cônes","Pupille et iris uniquement"],ans:1,exp:"L'œil se compose du globe oculaire (~24 mm), des nerfs optiques et de l'aire visuelle du cerveau. Les cônes (rétine) perçoivent les couleurs. Les bâtonnets perçoivent les niveaux de gris, même en faible luminosité."},
+// ========== NORMES ==========
+{t:'nor',tag:'Normes',src:'p.386',q:"Quelle norme réglemente les droits et obligations maître d'ouvrage / entrepreneur ?",opts:["SIA 257","SIA 118","ISO 12944","CRB"],ans:1,exp:"SIA 118 'Conditions générales pour l'exécution des travaux de construction' → s'applique à toutes les catégories de travaux."},
+{t:'nor',tag:'Normes',src:'p.386',q:"Que contient la norme SIA 257:2005 ?",opts:["Uniquement les prix","Directives techniques pour peinture, teintage bois et revêtements muraux","Normes incendie","Acier inoxydable"],ans:1,exp:"SIA 257:2005 = directives techniques pour la peinture, le teintage du bois et les revêtements muraux. La SIA 118/257:2005 complète la SIA 118 pour les contrats de peinture."},
+{t:'nor',tag:'Normes',src:'p.386',q:"Qu'est-ce que le NCS ?",opts:["Système antirouille","Natural Color System — nuancier à codage systématique de toutes les teintes","Norme d'application","Classification des solvants"],ans:1,exp:"NCS (Natural Color System) = nuancier à codage systématique des couleurs. Facilite la communication entre professionnels. Concurrent au RAL, DIN, Pantone, Munsell."},
+{t:'nor',tag:'Normes',src:'p.386',q:"Quelle norme internationale s'applique à l'anticorrosion des structures en acier ?",opts:["SIA 118","ISO 12944","NCS","DIN 6164"],ans:1,exp:"La norme NF EN ISO 12944 'Anticorrosion des structures en acier par systèmes de peinture' est souvent appliquée en Suisse en complément des normes SIA."},
+{t:'nor',tag:'Normes',src:'p.321',q:"Que signifie le label 'B' (Lignum) sur un produit de protection du bois ?",opts:["Protection insectes","Prévention contre le bleuissement du bois de construction","Protection pourriture","Combat la mérule"],ans:1,exp:"Label B = protection préventive contre le bleuissement du bois de construction. Bs = bleuissement primaire et moisissure du bois de sciage frais."},
+{t:'nor',tag:'Normes',src:'p.321',q:"Que signifie le label 'E' (Lignum) ?",opts:["Contre les insectes","Contre les champignons de pourriture molle, brune et blanche pour bois en contact permanent avec eau/terre","Contre le bleuissement","Contre les intempéries"],ans:1,exp:"Label E = agit préventivement contre les champignons de pourriture (molle, brune et blanche) pour les éléments en bois soumis à une humidité extrême — contact permanent avec la terre ou l'eau."},
+];
+
+const FLASH=[
+// MATÉRIAUX — solvants
+{t:'mat',tag:'Matériaux',f:"Terpènes (térébenthine) → utilisation ?",b:"Solvant pour huiles végétales et cires. Diluant pour lasures et vernis à l'huile."},
+{t:'mat',tag:'Matériaux',f:"Alcools (éthanol) → utilisation ?",b:"Solvant et diluant pour gomme-laque. Composant des diluants nitro, universels et pistolet."},
+{t:'mat',tag:'Matériaux',f:"Aliphates / white-spirit → utilisation ?",b:"Solvant et diluant pour résines alkydes et peintures à base d'alkyde."},
+{t:'mat',tag:'Matériaux',f:"Aromates (xylène, toluène) → pourquoi les remplacer ?",b:"Raisons d'hygiène du travail — de plus en plus remplacés par d'autres solvants."},
+{t:'mat',tag:'Matériaux',f:"Acétone → utilisation ?",b:"Solvant pour nitrocellulose. Principal composant des diluants nitro et universels. Vernis bi-composants."},
+{t:'mat',tag:'Matériaux',f:"Hydrocarbures chlorés → pourquoi les éviter ?",b:"Forte pollution de l'environnement — ne pas utiliser dans la mesure du possible."},
+{t:'mat',tag:'Matériaux',f:"Revêtement 'strippable' ?",b:"S'arrache à sec — la colle reste sur le mur. Ne pas perforer."},
+{t:'mat',tag:'Matériaux',f:"Revêtement 'pelable' ?",b:"La couche supérieure s'arrache à sec, la couche inférieure (maculature) reste collée au mur."},
+{t:'mat',tag:'Matériaux',f:"Papier peint Tekko ?",b:"Papier haut de gamme, vernis bronze multicouche, calandré avec cylindres acier. Aspect tissu de soie (motif damas)."},
+{t:'mat',tag:'Matériaux',f:"Grammage papier peint : léger / moyen / lourd ?",b:"Léger : 90-110 g/m². Moyen : 110-140 g/m². Lourd : 140-180 g/m²."},
+{t:'mat',tag:'Matériaux',f:"Surface utile d'un rouleau européen de papier peint ?",b:"53 cm × 10,05 m → surface utile 3,90 à 5,20 m². = 1,5 rouleau normal."},
+{t:'mat',tag:'Matériaux',f:"Teneur en carbone acier / fonte ?",b:"Acier : 0,5-1,7%. Fonte de fer : 2-4%."},
+{t:'mat',tag:'Matériaux',f:"Métal ferreux vs non ferreux ?",b:"Ferreux = magnétique (acier, fonte, fer). Non ferreux = non magnétique (alu, cuivre, zinc)."},
+{t:'mat',tag:'Matériaux',f:"Métal noble — exemples ?",b:"Or, platine, argent. S'oxydent très peu à l'air."},
+{t:'mat',tag:'Matériaux',f:"Qu'est-ce que le calicot / l'étamine ?",b:"Tissus fins en coton à larges mailles, autrefois utilisés pour renforcer les murs. Remplacés aujourd'hui par le tissu en fibres de verre."},
+// APPLICATION — outils
+{t:'app',tag:'Application',f:"Brosse à plafond — soies ?",b:"Soies de porc chinois noires/fauves (~10% crins de cheval) ou fibres synthétiques ou mélange. Dim. : 50×60 à 180×85 mm."},
+{t:'app',tag:'Application',f:"Brosse à plafond arrondie — dimension et usage ?",b:"135 × 40 mm. Même usage que brosse à plafond mais pour petites surfaces et lasures murales."},
+{t:'app',tag:'Application',f:"Brosse à surface ovale — dimension et usage ?",b:"135 × 65 mm, soies de porc fauves. Pour lasures d'imprégnation, apprêts, structurer revêtements et crépis fins."},
+{t:'app',tag:'Application',f:"Spatule à enduire bi-lame — largeur et structure ?",b:"12 à 35 cm, lame souple. Acier + renfort fer blanc + manche bois."},
+{t:'app',tag:'Application',f:"Truelle de plâtrier — largeur et règle d'utilisation ?",b:"2 à 12 cm, lame rigide, acier chromé inoxydable. Ne pas utiliser comme platoir !"},
+{t:'app',tag:'Application',f:"Truelle platoir/faucheuse — dimension et usage ?",b:"48 × 13 cm, acier inox. Pose à deux mains de masses d'enrobage et crépis."},
+{t:'app',tag:'Application',f:"Frottoir — dimension et usage ?",b:"Lame acier inox conique, coins arrondis (20-28 cm). Pour les techniques de stucage."},
+{t:'app',tag:'Application',f:"Brosse à encoller — dimension et usage ?",b:"180 × 80 mm, soies de porc ou fibres synthétiques. Application manuelle de colle sur papiers peints."},
+{t:'app',tag:'Application',f:"Roulette à joint vs roulette d'angle ?",b:"Roulette à joint : cylindrique 3-5 cm → raccords plats. Roulette d'angle : conique 4 cm → raccords dans les angles."},
+{t:'app',tag:'Application',f:"Spatule dentelée — à quoi servent les dents ?",b:"La longueur des dents détermine l'épaisseur de la couche d'adhésif déposée."},
+{t:'app',tag:'Application',f:"Rouleau laqueur en nylon — hauteur de poil et usage ?",b:"6 à 18 mm, largeur 140-250 mm. Peintures de sol, vitrificateurs parquet, bi-composants."},
+{t:'app',tag:'Application',f:"Grille de répartition — rôle ?",b:"Répartition uniforme de la peinture sur le rouleau lors du trempage dans le seau."},
+{t:'app',tag:'Application',f:"Comment nettoyer graisse/huile sur acier ?",b:"Solutions alcalines, nettoyants phosphatés, solvants organiques, alcool à brûler ou jet de vapeur. Chiffon propre + solvant neuf obligatoires."},
+{t:'app',tag:'Application',f:"Coupe double en tapisserie ?",b:"Superposition de 5-8 cm + coupe simultanée des deux lés → joint parfait après retrait des bords."},
+// SÉCURITÉ
+{t:'sec',tag:'Sécurité',f:"Règle d'or protection chimique du bois ?",b:"Aussi peu que possible, mais autant que nécessaire."},
+{t:'sec',tag:'Sécurité',f:"Label B vs Bs (Lignum) ?",b:"B = anti-bleuissement du bois de construction. Bs = bleuissement primaire + moisissure du bois de sciage frais."},
+{t:'sec',tag:'Sécurité',f:"Label Iv vs Ivr (Lignum) ?",b:"Iv = prévention insectes. Ivr = curatif immédiat insectes."},
+{t:'sec',tag:'Sécurité',f:"Label E (Lignum) ?",b:"Contre les champignons de pourriture pour bois en contact permanent avec eau/terre."},
+{t:'sec',tag:'Sécurité',f:"Label W (Lignum) ?",b:"Protège contre les intempéries sans contact permanent avec terre/eau. Sans biocide."},
+// SUPPORTS
+{t:'sup',tag:'Supports',f:"Limite humidité bois feuillu intérieur / résineux extérieur ?",b:"Feuillu intérieur : 12% max. Résineux extérieur : 10-15%. Mesurer jusqu'à 5 mm de profondeur."},
+{t:'sup',tag:'Supports',f:"Humidité critique pour moisissure / mérule / pourriture molle ?",b:"Moisissure + bleuissement : dès 22%. Mérule : dès 24%. Pourriture molle : > 55%."},
+{t:'sup',tag:'Supports',f:"Composition du bois (parois cellulaires) ?",b:"Cellulose 50-85% (solidité) + lignine 15-35% (durabilité). Les champignons se nourrissent de cellulose."},
+{t:'sup',tag:'Supports',f:"Comment vérifier la solidité d'un support minéral ?",b:"Essai de rayure (ongle → sillon profond = friable), tapoter (bruit creux = cavité), essai d'entaille."},
+{t:'sup',tag:'Supports',f:"Délai avant de peindre sur enduit à la chaux récent ?",b:"4 semaines (carbonatation suffisante). Sinon risque de destruction de la peinture et efflorescences."},
+{t:'sup',tag:'Supports',f:"Comment éliminer résines/cires du bois ?",b:"Mélange eau chaude + savon + ammoniaque + acétone, ou dérésinifiant commercial. Jamais de diluant ordinaire."},
+{t:'sup',tag:'Supports',f:"Qu'est-ce que la laitance sur béton ?",b:"Couche de surface friable issue du décoffrage — empêche l'absorption normale → à éliminer avant peinture."},
+{t:'sup',tag:'Supports',f:"Pénétration d'une peinture dans le bois raboté ?",b:"< 0,3 mm (cellules compactées par la raboteuse). Meilleure pénétration : bois de sciage brut."},
+// COULEUR
+{t:'col',tag:'Couleur',f:"Métamérisme ?",b:"Deux teintes identiques sous un éclairage, différentes sous un autre → sélectionner sous bon éclairage."},
+{t:'col',tag:'Couleur',f:"Synthèse soustractive : primaires et résultats ?",b:"Jaune + magenta + cyan → noir. Jaune+magenta = rouge. Magenta+cyan = bleu. Cyan+jaune = vert."},
+{t:'col',tag:'Couleur',f:"Couleurs tertiaires (mélange 2 secondaires) ?",b:"Orange+violet = gris rougeâtre. Violet+vert = gris bleuâtre. Vert+orange = gris jaunâtre."},
+{t:'col',tag:'Couleur',f:"Symbolique : rouge / bleu / vert / noir ?",b:"Rouge : passion, énergie. Bleu : fidélité, raison, calme. Vert : nature, espoir. Noir : élégance, mort, secret."},
+{t:'col',tag:'Couleur',f:"Solide des couleurs — 3 axes ?",b:"Teinte (cercle chromatique) + clarté (haut-bas) + saturation (centre-périphérie). Double cône = forme simple."},
+{t:'col',tag:'Couleur',f:"Rôle des cônes et bâtonnets dans l'œil ?",b:"Cônes → couleurs chromatiques (lumière suffisante). Bâtonnets → niveaux de gris, même en faible luminosité (~150 nuances)."},
+// NORMES
+{t:'nor',tag:'Normes',f:"SIA 118 vs SIA 257:2005 ?",b:"SIA 118 : droits/obligations toutes constructions. SIA 257:2005 : directives techniques peinture, teintage, revêtements."},
+{t:'nor',tag:'Normes',f:"NCS vs RAL vs Pantone ?",b:"Tous des systèmes de classification des couleurs. NCS = codage systématique. RAL = standard industrie. Pantone = standard graphique/design."},
+{t:'nor',tag:'Normes',f:"ISO 12944 ?",b:"Norme anticorrosion des structures en acier par systèmes de peinture. Souvent appliquée en Suisse."},
+{t:'nor',tag:'Normes',f:"Catalogue des articles normalisés (CAN) ?",b:"Recense les travaux de peinture fréquents → établir offres et factures. Compatible avec logiciels de devis."},
+];
+
+const TH=[
+{tag:'tapp',tl:'Application',title:"Pinceaux et brosses — types, dimensions, usages",body:`<p><strong>Brosse à plafond :</strong> soies de porc chinois noires/fauves (~10% crins) ou fibres synthétiques. Dim. : 50×60 mm à 180×85 mm. Pour couches de fond et peintures hydrosolubles sur grandes surfaces. Fibres synthétiques fendues → forte résistance au frottement.</p><p><strong>Brosse à plafond arrondie :</strong> mêmes matériaux, dim. 135×40 mm. Pour petites surfaces et lasures sur les murs.</p><p><strong>Brosse à surface ovale :</strong> soies de porc fauves liées, dim. 135×65 mm. Lasures d'imprégnation, apprêts, structurer revêtements et crépis fins.</p><p><strong>Brosse à surface droite :</strong> identique à l'ovale, dim. 135×65 mm ou 100×30 mm.</p><p><strong>Brosse à encoller :</strong> 180×80 mm, soies de porc ou fibres synthétiques. Application manuelle de colle sur les papiers peints.</p>`},
+{tag:'tapp',tl:'Application',title:"Spatules, truelles et frottoir — types et usages",body:`<p><strong>Spatule à enduire bi-lame :</strong> lame souple 12-35 cm. Acier + renfort fer blanc + manche bois. Travaux d'enduisage.</p><p><strong>Truelle de plâtrier :</strong> lame rigide 2-12 cm, acier forgé ou chromé inoxydable. Travaux précis d'enduit. <strong>Ne jamais utiliser comme platoir !</strong></p><p><strong>Truelle platoir / faucheuse :</strong> lame acier inox 48×13 cm. Pose à deux mains de masses d'enrobage et crépis.</p><p><strong>Truelle fine (allemande) :</strong> lame acier inox 28×13 cm. Pour traitement des enduits garnissants.</p><p><strong>Frottoir :</strong> lame acier inox conique, coins arrondis, 20×8 à 28×12 cm. Pour les techniques de stucage.</p><p><strong>Spatule dentelée (platoir à colle) :</strong> acier dentelé ou plastique. Longueur des dents = épaisseur de la couche d'adhésif. Pour adhésifs pâteux/visqueux.</p>`},
+{tag:'tapp',tl:'Application',title:"Rouleaux, roulettes et outils de tapissier",body:`<p><strong>Rouleaux à peinture :</strong> laine d'agneau, mohair ou peluche synthétique. La hauteur de poil et la matière influencent la structure de surface.</p><p><strong>Rouleau laqueur en nylon :</strong> poil 6-18 mm, largeur 140-250 mm. Peintures de sol, vitrificateurs parquet, bi-composants.</p><p><strong>Grille de répartition :</strong> fer blanc perforé galvanisé. Répartition uniforme de la peinture sur le rouleau.</p><p><strong>Brosse de tapissier :</strong> soies de porc, crins ou nylon, largeur 24-47 cm. Maroufler les papiers peints.</p><p><strong>Rouleau caoutchouc mousse :</strong> 18-25 cm, Ø 5 cm. Maroufler papiers peints et revêtements — idéal papiers photos.</p><p><strong>Roulette à joint :</strong> manchon cylindrique 3-5 cm. Raccords plats.</p><p><strong>Roulette d'angle :</strong> manchon conique 4 cm. Raccords dans les angles.</p><p><strong>Brasseur/mélangeur :</strong> 400-1600 W, 200-2000 tr/min. Le choix du batteur dépend de la viscosité du matériau.</p>`},
+{tag:'tapp',tl:'Application',title:"Nettoyage des surfaces en acier avant peinture",body:`<p><strong>Poussières et impuretés légères :</strong> brosse, balayette, aspirateur, air comprimé (lunettes obligatoires).</p><p><strong>Salissures adhérentes :</strong> gratter avec outils appropriés, ou décaper manuellement/mécaniquement avec abrasifs ou brosses métalliques.</p><p><strong>Graisse, huile, cire :</strong> solutions alcalines (bases faibles), nettoyants phosphatés, solvants organiques (diluants universels), alcool à brûler, ou jets de vapeur.</p><p><strong>Règle importante :</strong> le dégraissage au chiffon doit se faire avec un <strong>chiffon propre et du solvant neuf</strong>. Sinon la graisse est seulement étalée. Réserver cette méthode aux petites surfaces.</p><p><strong>Solvants chlorés :</strong> ne plus utiliser (forte pollution de l'environnement) sauf en installations industrielles fermées.</p><p><strong>Séchage après lavage :</strong> soufflage d'air chaud pour éviter la corrosion.</p>`},
+{tag:'tmat',tl:'Matériaux',title:"Solvants et diluants — classification complète",body:`<p>Le solvant dissout le liant. Le diluant ajuste la viscosité. Toujours utiliser le diluant recommandé par le fabricant.</p><ul><li><strong>Terpènes</strong> (térébenthine, dipentène) : huiles végétales, cires, lasures à l'huile</li><li><strong>Alcools</strong> (éthanol, butanol) : gomme-laque, diluants nitro</li><li><strong>Aliphates</strong> (white-spirit, essence minérale) : résines alkydes</li><li><strong>Aromates</strong> (xylène, toluène) : remplacés progressivement pour hygiène</li><li><strong>Esters</strong> (acétate d'éthyle, butyle) : résines diverses, vernis industriels</li><li><strong>Cétones</strong> (acétone) : nitrocellulose, diluants nitro et universels</li><li><strong>Hydrocarbures chlorés</strong> (chlorure de méthylène) : décapage industriel — à éviter (pollution)</li><li><strong>Eau</strong> : colles animales/végétales, peintures dispersion, silicate</li></ul><p>Les <strong>COV</strong> s'évaporent après application → pollution de l'air → privilégier peintures à faible teneur en COV.</p>`},
+{tag:'tmat',tl:'Matériaux',title:"Revêtements muraux — types et caractéristiques",body:`<p><strong>3 catégories :</strong> prêts à poser / pour pose ultérieure / matériaux de support.</p><ul><li><strong>Papier</strong> : 90-180 g/m², gaufré, imprimé</li><li><strong>Non-tissé</strong> : ne gonfle pas, résistant aux déchirures — remplace calicot/étamine</li><li><strong>Vinyle (synthétique)</strong> : étanche, anti-tache, lavable → couloirs, sanitaires</li><li><strong>Textile</strong> : fils contrecollés, ambiance chaleureuse</li><li><strong>Métallisé</strong> : feuille aluminium sur papier, ou PVC métallisé, ou Tekko</li></ul><p><strong>Types de raccords :</strong> sans raccord (découpe libre), avec raccord (répétition du motif → plus de chutes), raccord inversé (lés alternés retournés → différences de brillance moins visibles).</p><p><strong>Papiers à peindre :</strong> papier ingrain, non-tissé brut, fibres de verre → pontent les fissures et uniformisent le support.</p>`},
+{tag:'tmat',tl:'Matériaux',title:"Métaux — classification et production de l'acier",body:`<ul><li><strong>Ferreux</strong> : magnétiques → fonte, acier, fer</li><li><strong>Non ferreux</strong> : non magnétiques → zinc, cuivre, aluminium, plomb</li><li><strong>Alliages</strong> : laiton, bronze, acier chrome-nickel</li><li><strong>Légers</strong> : densité &lt; 5 g/cm³ → aluminium, titane</li><li><strong>Lourds</strong> : densité &gt; 5 g/cm³ → acier, plomb, cuivre</li><li><strong>Nobles</strong> : s'oxydent peu → or, platine, argent</li><li><strong>Alcalins</strong> : réagissent avec l'eau → sodium, potassium (ne pas utiliser en construction)</li></ul><p><strong>Production acier :</strong> minerai de fer → haut fourneau (coke + adjuvants, ~1600°C) → fonte brute → réduction carbone → acier (0,5-1,7% C). Fonte de fer : 2-4% C.</p>`},
+{tag:'tsup',tl:'Supports',title:"Le bois — composition, essences et risques",body:`<p><strong>Composition :</strong> cellulose 50-85% (solidité) + lignine 15-35% (durabilité). Aussi : protéines, résines, tannins, minéraux (0,3-10%).</p><p><strong>Risques d'endommagement :</strong></p><ul><li>UV : dégradation de la lignine, perte 0,01-0,1 mm/an</li><li>Eau : fissures, retrait/gonflement, champignons</li><li>Températures : &gt; 100°C séchage, 100-200°C désagrégation, 250-300°C carbonisation</li><li>Acides/bases forts = destruction</li><li>Usure mécanique selon la dureté</li></ul><p><strong>Essences :</strong> Noyer 0,68 g/cm³ dur. Peuplier 0,50 g/cm³ très tendre. Orme 0,68 g/cm³ bonne résistance eau.</p><p><strong>Pénétration des peintures :</strong> &lt; 0,3 mm en général. Plus faible sur bois raboté (cellules compactées). Maximale sur bois de sciage brut.</p>`},
+{tag:'tsup',tl:'Supports',title:"Champignons du bois — conditions et types",body:`<p><strong>Conditions de développement :</strong> matières organiques (cellulose, lignine), température (-2,5 à +42°C), humidité du bois.</p><p><strong>Humidités critiques :</strong></p><ul><li>Moisissure + bleuissement : dès <strong>22%</strong></li><li>Mérule : dès <strong>24%</strong> — seul champignon destructeur à cette humidité</li><li>Pourriture optimale pour la plupart : <strong>30%</strong> (point de saturation)</li><li>Pourriture molle : &gt; <strong>55%</strong></li></ul><p><strong>Types décolorants :</strong> moisissure (surface, noir/brun/rouge — ne détruit pas la cellulose mais = indicateur), bleuissement (pénètre dans le bois).</p><p><strong>Types destructeurs :</strong> pourriture molle, brune (mérule — décomposition en cubes), blanche.</p>`},
+{tag:'tsup',tl:'Supports',title:"Protection du bois — mesures constructives et chimiques",body:`<p><strong>Principe :</strong> protéger l'humidité par des mesures constructives EN PREMIER. Chimie = dernier recours.</p><p><strong>Mesures constructives :</strong></p><ul><li>Utiliser une essence résistante</li><li>Auvents, exposition minimale aux intempéries</li><li>Surfaces inclinées favorisant l'écoulement</li><li>Pose de gouttes pendantes</li><li>Écartement du sol</li><li>Ventilation arrière (mesures anti-condensation)</li><li>Protection des faces en bois de bout</li></ul><p><strong>Labels Lignum :</strong> B = anti-bleuissement. Bs = bleuissement + moisissure bois frais. Iv = anti-insectes préventif. Ivr = anti-insectes curatif. E = anti-pourriture. W = anti-intempéries (sans biocide).</p><p><strong>Règle :</strong> aussi peu de protection chimique que possible, mais autant que nécessaire.</p>`},
+{tag:'tsup',tl:'Supports',title:"Défauts des supports minéraux et méthodes d'examen",body:`<p><strong>Méthodes d'examen :</strong></p><ul><li>Visuel : rouille, efflorescences, champignons, salissures, aspérités</li><li>Humidité : film plastique, humidimètre</li><li>Solidité : essai de rayure (ongle → sillon profond = friable), tapoter (bruit creux = cavité), essai d'entaille</li><li>Absorption : mouillage de surface (eau absorbée immédiatement = OK)</li><li>Alcalinité : papiers indicateurs</li></ul><p><strong>Défauts et solutions :</strong></p><ul><li><strong>Enduit friable frais :</strong> attendre 4 semaines (carbonatation)</li><li><strong>Fissures de retrait :</strong> &gt; 0,2 mm irrégulières → remplir + treillis d'armature</li><li><strong>Fissures statiques :</strong> traversent tout le mur → mastic élastique + reprise enduit</li><li><strong>Humidité trop élevée :</strong> identifier la cause, étanchéifier, pare-vapeur</li><li><strong>Laitance :</strong> éliminer avant d'appliquer l'apprêt</li></ul>`},
+{tag:'tcol',tl:'Couleur',title:"Synthèses additive et soustractive — mélanges",body:`<p><strong>Additive (lumière, écrans) :</strong> addition de lumières. Primaires : rouge, vert, bleu → blanc. Utilisée en éclairage et affichage.</p><p><strong>Soustractive (filtres, lasures, impression) :</strong> absorption de lumière. Primaires : <strong>jaune, magenta, cyan → noir.</strong></p><ul><li>Jaune + magenta = rouge</li><li>Magenta + cyan = bleu</li><li>Cyan + jaune = vert</li></ul><p><strong>Mélange autotypique (impression tramée) :</strong> points côte à côte → additif ; points superposés → soustractif.</p><p><strong>Peintures pigmentées :</strong> principalement soustractif. Jaune + rouge + bleu → gris foncé (pas noir pur car réflexion directe des pigments de surface).</p>`},
+{tag:'tcol',tl:'Couleur',title:"Cercle chromatique, tertiaires et symbolique",body:`<ul><li><strong>Primaires :</strong> jaune (haut), rouge (droite), bleu (gauche)</li><li><strong>Secondaires :</strong> orange (J+R), vert (J+B), violet (R+B)</li><li><strong>Tertiaires (2 secondaires) :</strong> orange+violet = gris rougeâtre, violet+vert = gris bleuâtre, vert+orange = gris jaunâtre</li><li><strong>Complémentaires :</strong> opposées sur le cercle → mélangées = gris sombre ; côte à côte = contraste maximal</li></ul><p><strong>Symbolique :</strong> Jaune = soleil, joie. Orange = ardeur, chaleur. Rouge = passion, énergie. Pourpre = pouvoir, dignité. Violet = magie, secret. Bleu = fidélité, calme. Vert = nature, espoir. Marron = terre, discrétion. Blanc = pureté. Gris = neutralité. Noir = élégance, mort.</p>`},
+{tag:'tcol',tl:'Couleur',title:"Métamérisme, colorimétrie et perception visuelle",body:`<p><strong>Métamérisme :</strong> deux teintes identiques sous un éclairage, différentes sous un autre. Dû aux différences de pigmentation. → Sélectionner les couleurs sous un éclairage de bonne qualité (composition spectrale équilibrée).</p><p><strong>Colorimétrie :</strong> mesure par spectrophotomètre (370-760 nm). Convertit en tonalité + clarté + saturation. Permet conversion NCS, RAL, Pantone. Peintures métallisées → mesure à 2D (clarté change selon l'angle). Pigments nacrés/interférentiels → mesure à 3D.</p><p><strong>Perception visuelle :</strong> cônes = couleurs chromatiques (~300 pures, quelques millions au total). Bâtonnets = gris (~150 nuances, perçus même en faible luminosité). Un œil exercé détecte les mélanges mieux que tout spectrophotomètre.</p>`},
+{tag:'tnor',tl:'Normes',title:"Normes suisses et systèmes de couleurs",body:`<p><strong>Normes SIA :</strong></p><ul><li><strong>SIA 118</strong> : droits/obligations maître d'ouvrage et entrepreneur</li><li><strong>SIA 118/257:2005</strong> : contrats de peinture (volume, paiement)</li><li><strong>SIA 257:2005</strong> : directives techniques peinture, teintage bois, revêtements muraux</li><li><strong>SIA 2022</strong> : traitement de surface des constructions en acier</li></ul><p><strong>Autres normes :</strong></p><ul><li><strong>CRB</strong> : rationalisation de la construction (avec ASEPP)</li><li><strong>ISO 12944</strong> : anticorrosion des structures en acier</li></ul><p><strong>Systèmes de couleurs :</strong> NCS (Natural Color System), RAL, DIN-6164, Pantone, Munsell, EuroColor, ACC.</p><p><strong>Labels Lignum :</strong> B (anti-bleuissement), Bs, Iv (anti-insectes préventif), Ivr (curatif), E (anti-pourriture), F (anti-remontées capillaires), W (anti-intempéries), P (bostryches).</p>`},
+];
+
+let CT='all',CQ=[],CI=0,SC=0,AN=false,FI=0,FF=false,QD=0,BS=null,LS=null,LB=[];
+
+function showTab(t){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    if((t==='home'&&b.textContent.includes('Accueil'))||(t==='quiz'&&b.textContent.includes('Quiz'))||(t==='flash'&&b.textContent.includes('Flash'))||(t==='theory'&&b.textContent.includes('Théorie'))||(t==='board'&&b.textContent.includes('Classement')))b.classList.add('active');
+  });
+  if(t==='theory')renderTH();
+}
+
+function startQuiz(theme){
+  CT=theme;
+  const pool=theme==='all'?Q:Q.filter(q=>q.t===theme);
+  CQ=shuffle(pool).slice(0,Math.min(10,pool.length));
+  CI=0;SC=0;AN=false;
+  showTab('quiz');
+  document.getElementById('qs').style.display='none';
+  document.getElementById('qr').style.display='block';
+  document.getElementById('qd').style.display='none';
+  renderQ();
+}
+
+function renderQ(){
+  if(CI>=CQ.length){showScore();return;}
+  const q=CQ[CI];
+  document.getElementById('qp').style.width=Math.round((CI/CQ.length)*100)+'%';
+  document.getElementById('qc').textContent=(CI+1)+'/'+CQ.length;
+  document.getElementById('qsrc').textContent='Source : Technologie pour Peintre '+q.src;
+  document.getElementById('qth').textContent=q.tag;
+  document.getElementById('qtxt').textContent=q.q;
+  const el=document.getElementById('qo');el.innerHTML='';
+  q.opts.forEach((o,i)=>{const b=document.createElement('button');b.className='ob';b.textContent=o;b.onclick=()=>pick(i);el.appendChild(b);});
+  document.getElementById('qe').className='expl';
+  document.getElementById('bn').style.display='none';
+  AN=false;
+}
+
+function pick(idx){
+  if(AN)return;AN=true;
+  const q=CQ[CI];
+  document.querySelectorAll('.ob').forEach((b,i)=>{b.disabled=true;if(i===q.ans)b.classList.add('ok');else if(i===idx&&idx!==q.ans)b.classList.add('ko');});
+  if(idx===q.ans)SC++;
+  const ex=document.getElementById('qe');ex.textContent=q.exp;ex.className='expl show';
+  document.getElementById('bn').style.display='block';
+}
+
+function nextQ(){CI++;renderQ();}
+
+function showScore(){
+  document.getElementById('qr').style.display='none';
+  document.getElementById('qd').style.display='block';
+  const pct=Math.round((SC/CQ.length)*100);
+  document.getElementById('sp').textContent=pct+'%';
+  document.getElementById('sd2').textContent=SC+' bonne'+(SC>1?'s':'')+' réponse'+(SC>1?'s':'')+' sur '+CQ.length;
+  document.getElementById('ss').textContent=pct>=80?'⭐⭐⭐':pct>=50?'⭐⭐':'⭐';
+  document.getElementById('sm').textContent=pct>=80?'Excellent ! Tu maîtrises ce thème 💪':pct>=50?'Pas mal, encore un effort !':'Révise la théorie puis réessaie !';
+  QD++;LS={score:SC,total:CQ.length,pct};
+  if(BS===null||pct>BS)BS=pct;
+  document.getElementById('sd').textContent=QD;
+  document.getElementById('sb').textContent=BS+'%';
+}
+
+function renderFlash(){
+  const c=FLASH[FI];
+  document.getElementById('ft').textContent=c.tag;
+  document.getElementById('ff').textContent=c.f;
+  document.getElementById('fb').textContent=c.b;
+  document.getElementById('ff').style.display='block';
+  document.getElementById('fb').style.display='none';
+  document.getElementById('fh').textContent='Clique pour retourner';
+  document.getElementById('fc').textContent=(FI+1)+' / '+FLASH.length;
+  FF=false;
+}
+
+function flipCard(){
+  FF=!FF;
+  document.getElementById('ff').style.display=FF?'none':'block';
+  document.getElementById('fb').style.display=FF?'block':'none';
+  document.getElementById('fh').textContent=FF?'Clique pour remettre':'Clique pour retourner';
+}
+
+function nextF(){FI=(FI+1)%FLASH.length;renderFlash();}
+function prevF(){FI=(FI-1+FLASH.length)%FLASH.length;renderFlash();}
+
+function renderTH(){
+  const list=document.getElementById('thl');
+  if(list.children.length>0)return;
+  TH.forEach((t,i)=>{
+    const item=document.createElement('div');item.className='thi';
+    item.innerHTML=`<div class="thh" onclick="toggleT(${i})"><h3>${t.title}</h3><div style="display:flex;align-items:center;gap:8px"><span class="thtag ${t.tag}">${t.tl}</span><span class="chev" id="chev-${i}">▶</span></div></div><div class="thb" id="thb-${i}">${t.body}</div>`;
+    list.appendChild(item);
+  });
+}
+
+function toggleT(i){document.getElementById('thb-'+i).classList.toggle('open');document.getElementById('chev-'+i).classList.toggle('open');}
+
+function addScore(){
+  const name=document.getElementById('lbn').value.trim();
+  if(!name){alert('Entre ton prénom !');return;}
+  const pct=LS?LS.pct:0;
+  const det=LS?LS.score+'/'+LS.total:'0/0';
+  LB.push({name,pct,det});LB.sort((a,b)=>b.pct-a.pct);
+  document.getElementById('lbn').value='';LS=null;
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('lbd').innerHTML=LB.map((e,i)=>`<div class="lbr"><span class="lbrank">${medals[i]||(i+1)+'.'}</span><span class="lbname">${e.name}</span><span class="lbsc">${e.det}</span><span class="lbbadge">${e.pct}%</span></div>`).join('');
+}
+
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+renderFlash();
+</script>
+</body>
+</html>
